@@ -10,15 +10,12 @@ const Message = require('./models/message.model');
 const chatRouter = require('./routes/chat.router');
 const cookieParser = require('cookie-parser');
 
-
-
-
 dotenv.config();
 
 const app = express();
 
 app.use(cors({
-    origin: 'https://chatapp-two-mocha.vercel.app',
+    origin: process.env.CLIENT_URL,
     credentials: true
 }));
 
@@ -54,7 +51,7 @@ const server = http.createServer(app);
 
 io = new Server(server, {
     cors: {
-        origin: 'https://chatapp-two-mocha.vercel.app',
+        origin: process.env.CLIENT_URL,
         credentials: true
     }
 });
