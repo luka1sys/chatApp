@@ -18,7 +18,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://chatapp-two-mocha.vercel.app',
     credentials: true
 }));
 
@@ -54,7 +54,7 @@ const server = http.createServer(app);
 
 io = new Server(server, {
     cors: {
-        origin: 'http://localhost:5173',
+        origin: 'https://chatapp-two-mocha.vercel.app',
         credentials: true
     }
 });
