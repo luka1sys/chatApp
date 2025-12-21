@@ -1,6 +1,6 @@
 const Chat = require("../models/chat.model");
 const Message = require("../models/message.model");
-const AppError = require("../utils/AppError");
+const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 
