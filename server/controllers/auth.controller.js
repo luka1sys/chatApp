@@ -1,8 +1,9 @@
 
 const jwt = require('jsonwebtoken');
-const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/AppError");
+const AppError = require('../utils/AppError');
+const catchAsync = require('../utils/catchAsync');
 const User = require('../models/user.model');
+  
 
 const signToken = (user) => {
     return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -73,7 +74,7 @@ const getAllUsers = catchAsync(async (req, res, next) => {
         users,
     });
 
-  
+
 });
 
 
