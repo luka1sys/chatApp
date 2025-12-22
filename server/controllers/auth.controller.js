@@ -13,12 +13,12 @@ const signToken = (user) => {
 
 const createSendToken = (statusCode, res, user) => {
     const token = signToken(user);
-
+    // გათვლილია დაჰოსტილზე 
     res.cookie('jwt', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'prod',
-        sameSite: 'Lax',
-        maxAge: 3 * 24 * 60 * 60 * 1000 // 24 hours
+        secure: true,        // აუცილებელია HTTPS-ზე
+        sameSite: 'none',    // აუცილებელია Vercel ↔ Render
+        maxAge: 3 * 24 * 60 * 60 * 1000
     });
 
     res.status(statusCode).json(user);
