@@ -14,12 +14,13 @@ export const AuthProvider = ({ children }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        getUsers()
-    }, [])
-
+        if (user) {
+            getUsers();
+        }
+    }, [user]);
     const signup = async (userData) => {
         try {
-            const response = await fetch( `${import.meta.env.VITE_API_URL}/api/auth/signup`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -39,10 +40,10 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         try {
-            const response = await fetch( `${import.meta.env.VITE_API_URL}/api/auth/login`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'    
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(credentials),
                 credentials: 'include'
