@@ -27,14 +27,14 @@ const ChatWindow = () => {
 
     return (
         <div className="flex h-full flex-col overflow-hidden rounded-none sm:rounded-2xl border-x-0 sm:border border-neutral-800 bg-neutral-900 shadow-2xl sm:flex-row">
-
+            
             {/* Messages Window */}
             <div className="flex flex-1 flex-col min-h-0 bg-neutral-950 overflow-hidden">
-
+                
                 {/* Chat Header - აქ დავამატეთ უკან გამოსვლის ღილაკი */}
                 <div className="flex items-center gap-3 border-b border-neutral-800 bg-neutral-900/50 p-4 shrink-0">
-                    <button
-                        onClick={() => selectChat(null)}
+                    <button 
+                        onClick={() => selectChat(null)} 
                         className="lg:hidden p-2 -ml-2 text-neutral-400 hover:text-white transition-colors"
                     >
                         <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,8 +57,9 @@ const ChatWindow = () => {
                             return (
                                 <div key={msg._id} className={`flex w-full ${isOutgoing ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`flex max-w-[85%] flex-col gap-1 sm:max-w-[70%] ${isOutgoing ? 'items-end' : 'items-start'}`}>
-                                        <div className={`px-4 py-2.5 shadow-sm ${isOutgoing ? 'rounded-2xl rounded-tr-sm bg-emerald-600 text-white' : 'rounded-2xl rounded-tl-sm bg-neutral-800 text-neutral-200'
-                                            }`}>
+                                        <div className={`px-4 py-2.5 shadow-sm ${
+                                            isOutgoing ? 'rounded-2xl rounded-tr-sm bg-emerald-600 text-white' : 'rounded-2xl rounded-tl-sm bg-neutral-800 text-neutral-200'
+                                        }`}>
                                             <p className="text-sm leading-relaxed">{msg.text}</p>
                                         </div>
                                     </div>
