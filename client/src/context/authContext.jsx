@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { createContext } from "react";
 import api from "../components/api/api";
-import { toast, ToastContainer } from "react-toastify";
+import { toast,  } from "react-toastify";
 
 
 
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     const signup = async (userData) => {
         const toastId = toast.loading('signing...');
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
+            const response = await fetch("/api/auth/signup", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         const toastId = toast.loading('logining...');
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+            const response = await fetch("/api/auth/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

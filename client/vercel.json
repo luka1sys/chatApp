@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/api/(.*)",
+            "destination": "https://chatapp-1-376m.onrender.com"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
