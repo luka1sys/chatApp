@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema({
     },
     isVerified: { // email-ვერიფიკაციისთვის
         type: Boolean,
-        default: false
+        default: true
     },
     verifycationCode: String,
     emailVerificationExpires: Date,  // email ვერიფიკაციის კოდი

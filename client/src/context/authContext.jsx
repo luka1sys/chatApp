@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { createContext } from "react";
 import api from "../components/api/api";
+import { toast, ToastContainer } from "react-toastify";
 
 
 
@@ -36,6 +37,7 @@ export const AuthProvider = ({ children }) => {
         autoLogin();
     }, []);
     const signup = async (userData) => {
+        const toastId = toast.loading('signing...');
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
                 method: 'POST',
@@ -45,17 +47,33 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify(userData),
 
             });
-            if (response.ok) {
-                const data = await response.json();
-                setUser(data.newUser);
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message);
             }
+            setUser(data.user);
+
+            toast.update(toastId, {
+                render: 'Added successfully',
+                type: 'success',
+                isLoading: false,
+                autoClose: 2000
+            })
         } catch (err) {
-            console.error("Signup error:", err);
+
+            toast.update(toastId, {
+                render: err.message,
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+            });
         }
 
     }
 
     const login = async (credentials) => {
+        const toastId = toast.loading('logining...');
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
                 method: 'POST',
@@ -67,17 +85,32 @@ export const AuthProvider = ({ children }) => {
 
 
             });
-            if (response.ok) {
-
-                const data = await response.json();
-                setUser(data.user);
 
 
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message);
 
             }
+            console.log(data.message);
+
+            setUser(data);
+            toast.update(toastId, {
+                render: 'Login successfully',
+                type: 'success',
+                isLoading: false,
+                autoClose: 2000
+            })
 
         } catch (err) {
-            console.error("Login error:", err);
+            toast.update(toastId, {
+                render: err.message,
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+            });
         }
     }
     console.log("User after login:", user);
@@ -92,12 +125,7 @@ export const AuthProvider = ({ children }) => {
             console.error('Error fetching users:', error);
         }
     }
-
-
-
-
-
-
+    
     return (
         <authContext.Provider value={{ user, signup, login, users }}>
             {children}

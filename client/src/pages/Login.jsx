@@ -1,8 +1,9 @@
 import { useAuth } from "../context/authContext";
-import { Link } from "react-router";
+import { Link, useNavigate,  } from "react-router";
 
 const Login = () => {
   const { login } = useAuth();
+  const navigate = useNavigate()
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -11,8 +12,10 @@ const Login = () => {
       password: e.target.password.value,
     };
     login(userData);
+    navigate("/")
+    e.target.reset();
   };
-  
+
   return (
     <div className="flex min-h-[calc(100vh-80px)] items-center justify-center p-4">
       <div className="w-full max-w-md overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/50 shadow-2xl backdrop-blur-md">
@@ -36,7 +39,7 @@ const Login = () => {
                 className="w-full rounded-xl border border-neutral-800 bg-neutral-950 px-4 py-3 text-sm text-neutral-200 placeholder-neutral-600 outline-none transition-all focus:border-emerald-500/50 focus:ring-4 focus:ring-emerald-500/10"
               />
             </div>
-            
+
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-medium uppercase tracking-wide text-neutral-500" htmlFor="password">
@@ -60,7 +63,7 @@ const Login = () => {
               Sign In
             </button>
           </form>
-          
+
           <p className="mt-6 text-center text-sm text-neutral-500">
             Don't have an account?{' '}
             <Link to="/signup" className="font-medium text-emerald-500 hover:text-emerald-400 hover:underline">
