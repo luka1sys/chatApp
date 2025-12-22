@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "https://chatapp-1-376m.onrender.com"
+            "destination": "https://chatapp-1-376m.onrender.com/api/$1"
         },
         {
             "source": "/(.*)",
