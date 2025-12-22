@@ -18,6 +18,23 @@ export const AuthProvider = ({ children }) => {
             getUsers();
         }
     }, [user]);
+    useEffect(() => {
+        const autoLogin = async () => {
+            try {
+                const res = await api.post(
+                    '/auth/auto-login',
+                    {},
+                    { withCredentials: true }
+                );
+
+                setUser(res.data.user);
+            } catch (err) {
+                setUser(null);
+            }
+        };
+
+        autoLogin();
+    }, []);
     const signup = async (userData) => {
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
@@ -53,7 +70,7 @@ export const AuthProvider = ({ children }) => {
             if (response.ok) {
 
                 const data = await response.json();
-                setUser(data);
+                setUser(data.user);
 
 
 

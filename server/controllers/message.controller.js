@@ -36,12 +36,10 @@ const sendMessage = catchAsync(async (req, res, next) => {
         text
     });
 
-    // IMPORTANT: Populate sender info before sending response
-    // This ensures frontend receives sender.fullname without errors
+   
     await message.populate('sender', 'fullname email');
 
-    // Emit message to all connected clients via Socket.IO for real-time updates
-    // req.io is the Socket.IO instance attached in server.js
+   
     if (req.io) {
         req.io.to(chatId).emit('newMessage', message);
     }
