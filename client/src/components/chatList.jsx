@@ -1,9 +1,11 @@
 import { useAuth } from "../context/authContext";
 import { useChat } from "../context/chatContext";
+import { useMessage } from "../context/messageContext";
 
 const ChatList = () => {
     const { user } = useAuth();
     const { chats } = useChat();
+    const { selectChat } = useMessage();
 
     if (!user) {
         return (
@@ -47,6 +49,7 @@ const ChatList = () => {
                     {chats.map((chat) => (
                         <div 
                             key={chat._id}
+                            onClick={() => selectChat(chat._id)}
                             className="group relative cursor-pointer rounded-xl p-3 transition-all duration-200 hover:bg-neutral-800 hover:shadow-md"
                         >
                             <div className="flex items-center gap-3">

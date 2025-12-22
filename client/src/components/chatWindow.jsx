@@ -16,8 +16,11 @@ const ChatWindow = () => {
         setNewMessage("");
     };
 
+    // Get current chat title for mobile header
+    const currentChat = chats.find(chat => chat._id === currentChatId);
+
     return (
-        <div className="flex h-full flex-col overflow-hidden rounded-none sm:rounded-2xl border-x-0 sm:border border-neutral-800 bg-neutral-900 shadow-2xl sm:flex-row">
+        <div className="flex h-full w-full flex-col overflow-hidden rounded-none sm:rounded-2xl border-x-0 sm:border border-neutral-800 bg-neutral-900 shadow-2xl sm:flex-row">
             
             {/* Conversations Sidebar - მობილურზე ვმალავთ, რომ მესიჯებისთვის დარჩეს ადგილი */}
             <div className="hidden sm:flex w-full flex-col border-b border-neutral-800 bg-neutral-900/50 sm:w-72 sm:border-b-0 sm:border-r shrink-0">
@@ -56,6 +59,31 @@ const ChatWindow = () => {
 
             {/* Messages Area */}
             <div className="flex flex-1 flex-col min-h-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/30 via-neutral-900 to-neutral-950 overflow-hidden">
+                
+                {/* Mobile Header with Back Button - Only visible on mobile when chat is selected */}
+                {currentChatId && (
+                    <div className="block lg:hidden shrink-0 border-b border-neutral-800 bg-neutral-900/90 backdrop-blur-md">
+                        <div className="flex items-center gap-3 px-4 py-3">
+                            <button
+                                onClick={() => selectChat(null)}
+                                className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-neutral-800 active:scale-95 transition-all"
+                                aria-label="Back to chat list"
+                            >
+                                <svg className="h-5 w-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <div className="flex-1 min-w-0">
+                                <h2 className="text-sm font-semibold text-neutral-100 truncate">
+                                    {currentChat?.title || 'Chat'}
+                                </h2>
+                                <p className="text-xs text-neutral-500">
+                                    {currentChat?.members.length || 0} members
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 
                 {/* Messages List - min-h-0 და flex-1 აუცილებელია სქროლისთვის */}
                 <div className="flex-1 overflow-y-auto p-4 sm:p-6 scrollbar-thin scrollbar-thumb-neutral-800">
@@ -101,7 +129,7 @@ const ChatWindow = () => {
                 </div>
 
                 {/* Input Area - shrink-0 უზრუნველყოფს, რომ ფორმა არ დაიჭყლიტოს */}
-                <div className="shrink-0 border-t border-neutral-800 bg-neutral-900/90 p-4 pb-6 sm:pb-4 backdrop-blur-md">
+                <div className="shrink-0 border-t  border-neutral-800 bg-neutral-900/90 p-4 pb-6 sm:pb-4 backdrop-blur-md">
                     <form onSubmit={handleSend} className="relative flex items-center gap-2 sm:gap-3">
                         <input
                             type="text"
