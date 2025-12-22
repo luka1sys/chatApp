@@ -17,9 +17,10 @@ const ChatWindow = () => {
     };
 
     return (
-        <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-2xl sm:flex-row">
-            {/* Chat list sidebar */}
-            <div className="flex w-full flex-col border-b border-neutral-800 bg-neutral-900/50 sm:w-72 sm:border-b-0 sm:border-r">
+        <div className="flex h-full flex-col overflow-hidden rounded-none sm:rounded-2xl border-x-0 sm:border border-neutral-800 bg-neutral-900 shadow-2xl sm:flex-row">
+            
+            {/* Conversations Sidebar - მობილურზე ვმალავთ, რომ მესიჯებისთვის დარჩეს ადგილი */}
+            <div className="hidden sm:flex w-full flex-col border-b border-neutral-800 bg-neutral-900/50 sm:w-72 sm:border-b-0 sm:border-r shrink-0">
                 <div className="bg-neutral-900/80 px-5 py-4 backdrop-blur-sm">
                     <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-500">Conversations</h3>
                 </div>
@@ -53,9 +54,10 @@ const ChatWindow = () => {
                 </div>
             </div>
 
-            {/* Messages window */}
-            <div className="flex flex-1 flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/30 via-neutral-900 to-neutral-950">
-                {/* Messages area */}
+            {/* Messages Area */}
+            <div className="flex flex-1 flex-col min-h-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/30 via-neutral-900 to-neutral-950 overflow-hidden">
+                
+                {/* Messages List - min-h-0 და flex-1 აუცილებელია სქროლისთვის */}
                 <div className="flex-1 overflow-y-auto p-4 sm:p-6 scrollbar-thin scrollbar-thumb-neutral-800">
                     {messages.length === 0 ? (
                         <div className="flex h-full flex-col items-center justify-center space-y-4 opacity-50">
@@ -75,20 +77,20 @@ const ChatWindow = () => {
                                         key={msg._id} 
                                         className={`flex w-full ${isOutgoing ? 'justify-end' : 'justify-start'}`}
                                     >
-                                        <div className={`flex max-w-[85%] flex-col gap-1 sm:max-w-[70%] ${isOutgoing ? 'items-end' : 'items-start'}`}>
+                                        <div className={`flex max-w-[90%] flex-col gap-1 sm:max-w-[75%] ${isOutgoing ? 'items-end' : 'items-start'}`}>
                                             <div className={`relative px-4 py-2.5 shadow-sm ${
                                                 isOutgoing 
-                                                    ? 'rounded-2xl rounded-tr-sm bg-emerald-600 text-white shadow-emerald-900/10' 
+                                                    ? 'rounded-2xl rounded-tr-sm bg-emerald-600 text-white' 
                                                     : 'rounded-2xl rounded-tl-sm bg-neutral-800 text-neutral-200 border border-neutral-700/50'
                                             }`}>
-                                                <div className="mb-1 flex items-center justify-between gap-4">
+                                                <div className="mb-0.5 flex items-center justify-between gap-4">
                                                     <span className={`text-[10px] font-bold uppercase tracking-wider ${
                                                         isOutgoing ? 'text-emerald-200' : 'text-emerald-500'
                                                     }`}>
                                                         {isOutgoing ? 'You' : msg.sender.fullname}
                                                     </span>
                                                 </div>
-                                                <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                                                <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -98,23 +100,23 @@ const ChatWindow = () => {
                     )}
                 </div>
 
-                {/* Input area */}
-                <div className="border-t border-neutral-800 bg-neutral-900/90 p-4 backdrop-blur-md">
-                    <form onSubmit={handleSend} className="relative flex items-center gap-3">
+                {/* Input Area - shrink-0 უზრუნველყოფს, რომ ფორმა არ დაიჭყლიტოს */}
+                <div className="shrink-0 border-t border-neutral-800 bg-neutral-900/90 p-4 pb-6 sm:pb-4 backdrop-blur-md">
+                    <form onSubmit={handleSend} className="relative flex items-center gap-2 sm:gap-3">
                         <input
                             type="text"
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
                             placeholder="Type a message..."
-                            className="flex-1 rounded-xl border border-neutral-800 bg-neutral-950 px-4 py-3.5 text-sm text-neutral-200 placeholder-neutral-600 shadow-inner outline-none transition-all focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/10"
+                            className="flex-1 rounded-xl border border-neutral-800 bg-neutral-950 px-4 py-3 text-sm text-neutral-200 placeholder-neutral-600 outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/10"
                         />
                         <button 
                             type="submit"
                             disabled={!newMessage.trim()}
-                            className="group flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-3.5 font-medium text-white transition-all hover:bg-emerald-500 active:scale-95 disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-500 disabled:active:scale-100"
+                            className="group flex h-[46px] w-[46px] sm:w-auto items-center justify-center rounded-xl bg-emerald-600 sm:px-4 font-medium text-white transition-all hover:bg-emerald-500 active:scale-95 disabled:bg-neutral-800 disabled:text-neutral-500"
                         >
                             <span className="hidden sm:inline mr-2">Send</span>
-                            <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="h-5 w-5 sm:transition-transform sm:group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 12h14" />
                             </svg>
                         </button>
