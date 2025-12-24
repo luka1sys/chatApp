@@ -32,15 +32,11 @@ const createChat = catchAsync(async (req, res, next) => {
 
 
 const getChats = catchAsync(async (req, res, next) => {
-    const userId = req.query.userId;
+    const userId = req.user._id;
 
-    let chats;
-    if (userId) {
-        // ვიღებთ ჩატებს, სადაც user არის member
-        chats = await Chat.find({ members: userId }).populate('members', 'fullname email');
-    } else {
-        chats = await Chat.find().populate('members', 'fullname email');
-    }
+    const chats = await Chat.find({
+        members: userId
+    }).populate('members', 'fullname email');
 
     res.status(200).json({
         status: 'success',
