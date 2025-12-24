@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         const toastId = toast.loading('logining...');
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+            const response = await fetch(`/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
